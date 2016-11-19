@@ -1,0 +1,22 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<GridPane fx:controller="client.controller.Board"
+          xmlns:fx="http://javafx.com/fxml">
+    <SplitPane>
+        <TableView fx:id="boardTable" prefWidth="650">
+            <columns>
+                <TableColumn text="Text" fx:id="textColumn" />
+                <TableColumn text="Author" fx:id="authorColumn" />
+            </columns>
+        </TableView>
+        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="2" vgap="10">
+            <Button text="Создать сообщение"
+                    GridPane.rowIndex="0"
+                    onAction="#handleCreateMessage"/>
+        </GridPane>
+    </SplitPane>
+
+</GridPane>

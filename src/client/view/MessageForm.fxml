@@ -1,0 +1,30 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml"  hgap="10" vgap="10">
+    <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+        <Button text="Вернуться к списку"
+                onAction="#handleBackButtonAction"/>
+    </GridPane>
+
+    <Text fx:id="title"
+          GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="4">
+        <TextArea fx:id="text" prefWidth="500" prefHeight="200"/>
+    </GridPane>
+
+    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="5">
+        <Button fx:id="formButton"
+                onAction="#handleSubmitForm"/>
+    </GridPane>
+
+</GridPane>

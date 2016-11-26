@@ -4,7 +4,10 @@ import client.model.Message;
 import java.net.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 
+import client.model.Transporter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -62,6 +65,16 @@ class Connection extends Thread {
                 if (model instanceof Message) {
                     this.saveData(model, "messages");
                 }
+
+                if (model instanceof Transporter) {
+                    Transporter transporter = (Transporter) model;
+
+                    System.out.printf(transporter.getOperation());
+
+                    //if (transporter.getOperation() == "fetch") {
+                        this.fetchData(transporter);
+                    //}
+                }
             } catch (EOFException e) {
                 System.out.println("EOF:" + e.getMessage());
             } catch (IOException e) {
@@ -69,6 +82,31 @@ class Connection extends Thread {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void fetchData(Transporter transporter) {
+        JSONArray list = getData((String)transporter.getModule());
+
+        switch (transporter.getModule()) {
+            case "messages":
+                ArrayList<Message> theMessagesList = new ArrayList<Message>();
+
+                Iterator i = list.iterator();
+
+                while (i.hasNext()) {
+                    JSONObject message = (JSONObject) i.next();
+                    theMessagesList.add(new Message((String)message.get("text"), (String)message.get("authorId")));
+                }
+
+                Message[] theMessages = theMessagesList.toArray(new Message[theMessagesList.size()]);
+
+                try {
+                    outputStream.writeObject(theMessages);
+                } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
+                } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
+
+                break;
         }
     }
 
@@ -128,8 +166,10 @@ class Connection extends Thread {
 
     private String getFilePath(String type) {
         String filePath = "";
+        System.out.println("TYPE: " + type);
 
-        if (type == "messages") filePath = messagesFile;
+        //if (type == "messages")
+        filePath = messagesFile;
         if (type == "board") filePath = boardFile;
         if (type == "users") filePath = usersFile;
 

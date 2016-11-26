@@ -36,9 +36,11 @@ public class Main extends Application {
         primaryStage = primaryStageValue;
         primaryStage.setTitle("Board");
 
+        clientService = new TCPClient();
+
         boardModel = new Board();
 
-        clientService = new TCPClient();
+        clientService.getMessagesFromServer();
 
         initRootLayout();
         showAuthPage();

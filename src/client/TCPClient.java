@@ -2,6 +2,7 @@
 package client;
 
 import client.model.Message;
+import client.model.Transporter;
 
 import java.net.*;
 import java.io.*;
@@ -24,11 +25,25 @@ public class TCPClient {
         outputStream = new ObjectOutputStream(s.getOutputStream());
     }
 
+    public void getMessagesFromServer() {
+        Transporter transporter = new Transporter("fetch", "messages");
+
+        try {
+            outputStream.writeObject(transporter);
+
+            Object objects = inputStream.readObject();
+
+            Message[] theMessages = (Message[])objects;
+
+            Main.getInstance().boardModel.uploadMessages(theMessages);
+        } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
+        } catch (IOException e) {System.out.println ("readline:"+e.getMessage());
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+    }
 
     public void sendMessage(Message messageModel) {
         try {
             outputStream.writeObject(messageModel);
-            //outputStream.close();
         } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
         } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
     }

@@ -17,7 +17,7 @@ import javafx.beans.property.StringProperty;
 public class Message implements Serializable {
     private final String text;
     private final Integer id;
-    private final transient ObjectProperty<LocalDate> date;
+    private final transient LocalDate date;
     private final String dateFormat;
     private final String authorId;
 
@@ -25,7 +25,7 @@ public class Message implements Serializable {
         this.text = text;
         this.id = 1;
         this.authorId = authorId;
-        this.date = new SimpleObjectProperty<LocalDate>(LocalDate.of(1999, 2, 21));
+        this.date = LocalDate.of(1999, 2, 21);
         this.dateFormat = DateUtil.format(this.getDate());
     }
 
@@ -38,7 +38,7 @@ public class Message implements Serializable {
     }
 
     public LocalDate getDate() {
-        return date.get();
+        return date;
     }
 
     public String getAuthorId() {

@@ -1,0 +1,47 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<GridPane fx:controller="client.controller.Registration"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <Text text="Регистрация"
+          GridPane.columnIndex="1" GridPane.rowIndex="0"
+          GridPane.columnSpan="2"/>
+
+    <Label text="Имя:"
+           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+    <TextField fx:id="nameField"
+               GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Label text="Фамилия:"
+           GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+
+    <TextField fx:id="surnameField"
+               GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+    <Label text="Логин:"
+           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+
+    <TextField fx:id="loginField"
+               GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+
+    <Label text="Пароль:"
+           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+
+    <PasswordField fx:id="passwordField"
+                   GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+
+    <HBox spacing="10" alignment="bottom_right"
+          GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <Button text="Регистрация"
+                onAction="#handleSubmitButtonAction"/>
+    </HBox>
+
+    <Text fx:id="error"
+          GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+</GridPane>

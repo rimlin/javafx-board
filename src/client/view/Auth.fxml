@@ -30,6 +30,12 @@
                 onAction="#handleSubmitButtonAction"/>
     </HBox>
 
+    <HBox spacing="10" alignment="bottom_right"
+          GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <Button text="Регистрация"
+                onAction="#handleReg"/>
+    </HBox>
+
     <Text fx:id="error"
-          GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+          GridPane.columnIndex="1" GridPane.rowIndex="7"/>
 </GridPane>

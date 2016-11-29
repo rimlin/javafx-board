@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 import client.model.Transporter;
+import client.model.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -66,6 +67,10 @@ class Connection extends Thread {
                     this.saveData(model, "messages");
                 }
 
+                if (model instanceof User) {
+                    this.saveData(model, "users");
+                }
+
                 if (model instanceof Transporter) {
                     Transporter transporter = (Transporter) model;
 
@@ -107,6 +112,25 @@ class Connection extends Thread {
                 } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
 
                 break;
+
+            case "users":
+                ArrayList<User> theUserList = new ArrayList<User>();
+
+                Iterator iu = list.iterator();
+
+                while (iu.hasNext()) {
+                    JSONObject message = (JSONObject) iu.next();
+                    theUserList.add(new User(((Long) message.get("id")).intValue(), (String)message.get("login"), (String)message.get("password"), (String)message.get("name"), (String)message.get("surname")));
+                }
+
+                User[] theUsers = theUserList.toArray(new User[theUserList.size()]);
+
+                try {
+                    outputStream.writeObject(theUsers);
+                } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
+                } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
+
+                break;
         }
     }
 
@@ -132,13 +156,23 @@ class Connection extends Thread {
         JSONObject item = new JSONObject();
         JSONArray list = getData(type);
 
-        if (type == "messages") {
+        if (type.equals("messages")) {
             Message message = (Message) model;
 
             item.put("id", message.getId());
             item.put("text", message.getText());
             item.put("authorId", message.getAuthorId());
             item.put("dateFormat", message.getDateFormat());
+        }
+
+        if (type.equals("users")) {
+            User user = (User) model;
+
+            item.put("id", user.getId());
+            item.put("login", user.getLogin());
+            item.put("password", user.getPassword());
+            item.put("name", user.getFirstName());
+            item.put("surname", user.getLastName());
         }
 
         list.add(item);
@@ -170,8 +204,8 @@ class Connection extends Thread {
 
         //if (type == "messages")
         filePath = messagesFile;
-        if (type == "board") filePath = boardFile;
-        if (type == "users") filePath = usersFile;
+        if (type.equals("board")) filePath = boardFile;
+        if (type.equals("users")) filePath = usersFile;
 
         return filePath;
     }

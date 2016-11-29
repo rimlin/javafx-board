@@ -3,6 +3,7 @@ package client;
 
 import client.model.Message;
 import client.model.Transporter;
+import client.model.User;
 
 import java.net.*;
 import java.io.*;
@@ -41,9 +42,32 @@ public class TCPClient {
         } catch (ClassNotFoundException e) { e.printStackTrace(); }
     }
 
+    public void getUsersFromServer() {
+        Transporter transporter = new Transporter("fetch", "users");
+
+        try {
+            outputStream.writeObject(transporter);
+
+            Object objects = inputStream.readObject();
+
+            User[] theUsers = (User[])objects;
+
+            Main.getInstance().usersController.uploadUsers(theUsers);
+        } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
+        } catch (IOException e) {System.out.println ("readline:"+e.getMessage());
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+    }
+
     public void sendMessage(Message messageModel) {
         try {
             outputStream.writeObject(messageModel);
+        } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
+        } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
+    }
+
+    public void createUser(User userModel) {
+        try {
+            outputStream.writeObject(userModel);
         } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
         } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
     }

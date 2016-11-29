@@ -1,5 +1,6 @@
 package client;
 
+import client.controller.Users;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -21,6 +22,8 @@ public class Main extends Application {
 
     public TCPClient clientService;
 
+    public Users usersController;
+
     private static Main instance;
 
     public Main() {
@@ -38,9 +41,12 @@ public class Main extends Application {
 
         clientService = new TCPClient();
 
+        usersController = new Users();
+
         boardModel = new Board();
 
         clientService.getMessagesFromServer();
+        clientService.getUsersFromServer();
 
         initRootLayout();
         showAuthPage();
@@ -76,6 +82,20 @@ public class Main extends Application {
             GridPane authPage = (GridPane) loader.load();
 
             rootLayout.setCenter(authPage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void showRegPage() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("view/Registration.fxml"));
+
+            GridPane regPage = (GridPane) loader.load();
+
+            rootLayout.setCenter(regPage);
         } catch (IOException e) {
             e.printStackTrace();
         }

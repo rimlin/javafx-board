@@ -23,13 +23,17 @@ class Connection extends Thread {
     ObjectOutputStream dbSave;
     Socket clientSocket;
 
+    TCPServer tcpServer;
+
     private String messagesFile = "./messages.json";
     private String boardFile = "./board.json";
     private String usersFile = "./users.json";
 
     ArrayList<String> tableTypes = new ArrayList<String>();
 
-    public Connection (Socket aClientSocket) {
+    public Connection (Socket aClientSocket, TCPServer tcpServer) {
+        tcpServer = tcpServer;
+
         tableTypes.add("messages");
         tableTypes.add("board");
         tableTypes.add("users");
@@ -83,7 +87,9 @@ class Connection extends Thread {
             } catch (EOFException e) {
                 System.out.println("EOF:" + e.getMessage());
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
+
+                tcpServer.tryReConnect();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }

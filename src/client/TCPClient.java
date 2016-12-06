@@ -36,7 +36,7 @@ public class TCPClient {
 
             Message[] theMessages = (Message[])objects;
 
-            Main.getInstance().boardModel.uploadMessages(theMessages);
+            Main.getInstance().boardController.uploadMessages(theMessages);
         } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
         } catch (IOException e) {System.out.println ("readline:"+e.getMessage());
         } catch (ClassNotFoundException e) { e.printStackTrace(); }

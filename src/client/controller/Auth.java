@@ -28,6 +28,7 @@ public class Auth {
         Optional checkUser = Main.getInstance().usersController.getUserByLoginPassword(loginField.getText(), passwordField.getText());
 
         if (checkUser.isPresent() && checkUser.get() instanceof User) {
+            Main.getInstance().usersController.setCurrentUser((User) checkUser.get());
             Main.getInstance().showBoardPage();
         } else {
             error.setText("Неправильное имя пользователя или пароль!");

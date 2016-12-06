@@ -107,7 +107,7 @@ class Connection extends Thread {
 
                 while (i.hasNext()) {
                     JSONObject message = (JSONObject) i.next();
-                    theMessagesList.add(new Message((String)message.get("text"), (String)message.get("authorId")));
+                    theMessagesList.add(new Message(((Long) message.get("id")).intValue(), (String) message.get("text"), ((Long) message.get("authorId")).intValue(), (String) message.get("date")));
                 }
 
                 Message[] theMessages = theMessagesList.toArray(new Message[theMessagesList.size()]);
@@ -168,7 +168,7 @@ class Connection extends Thread {
             item.put("id", message.getId());
             item.put("text", message.getText());
             item.put("authorId", message.getAuthorId());
-            item.put("dateFormat", message.getDateFormat());
+            item.put("date", message.getDateString());
         }
 
         if (type.equals("users")) {

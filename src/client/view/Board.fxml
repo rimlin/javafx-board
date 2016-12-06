@@ -3,7 +3,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 
-<GridPane fx:controller="client.controller.Board"
+<GridPane fx:controller="client.controller.BoardView"
           xmlns:fx="http://javafx.com/fxml">
     <SplitPane>
         <TableView fx:id="boardTable" prefWidth="650">

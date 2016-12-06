@@ -4,21 +4,24 @@ import client.controller.Users;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import client.model.Board;
+import client.controller.Board;
 import client.model.Message;
 import client.controller.MessageForm;
 import client.controller.MessageView;
 
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
-    public Board boardModel;
+    public Board boardController;
 
     public TCPClient clientService;
 
@@ -43,13 +46,25 @@ public class Main extends Application {
 
         usersController = new Users();
 
-        boardModel = new Board();
+        boardController = new Board();
 
-        clientService.getMessagesFromServer();
         clientService.getUsersFromServer();
+        clientService.getMessagesFromServer();
 
         initRootLayout();
         showAuthPage();
+    }
+
+    private void attachMenu() {
+        MenuBar menuBar = new MenuBar();
+
+        Menu menuProfile = new Menu("Profile");
+        Menu menuBoard = new Menu("Board");
+        Menu menuExit = new Menu("Exit");
+
+        menuBar.getMenus().addAll(menuProfile, menuBoard, menuExit);
+
+        rootLayout.setTop(menuBar);
     }
 
     public void initRootLayout() {
@@ -69,6 +84,8 @@ public class Main extends Application {
             primaryStage.getScene().getStylesheets().addAll(style);
 
             primaryStage.show();
+
+            attachMenu();
         } catch (IOException e) {
             e.printStackTrace();
         }

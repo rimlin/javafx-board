@@ -2,7 +2,6 @@ package client.controller;
 
 import client.Main;
 import client.model.Message;
-import client.util.DateUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -29,8 +28,8 @@ public class MessageView {
     public void initialize() {
         text.setWrapText(true);
         text.setText(messageModel.getText());
-        date.setText(DateUtil.format(messageModel.getDate()));
-        author.setText(messageModel.getAuthorId());
+        date.setText(messageModel.getDateFormat());
+        author.setText(messageModel.getAuthor());
     }
 
     @FXML

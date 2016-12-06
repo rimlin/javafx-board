@@ -31,16 +31,12 @@ public class Users {
         userList.addAll(Arrays.asList(list));
     }
 
-    public User getUserById(Integer id) {
-        User findedUser = userList
+    public Optional getUserById(Integer id) {
+        return userList
                 .stream()
                 .filter(user -> user.getId() == id)
-                .findFirst()
-                .get();
-
-        return findedUser;
+                .findFirst();
     }
-
 
     public Optional getUserByLoginPassword(String login, String password) {
         return userList

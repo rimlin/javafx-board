@@ -59,9 +59,9 @@ public class MessageForm {
     }
 
     private void createMessage() {
-        messageModel = new Message(text.getText(), "1");
+        messageModel = new Message(-1, text.getText(), Main.getInstance().usersController.getCurrentUser().getId(), "-1");
 
-        Main.getInstance().boardModel.addMessage(messageModel);
+        Main.getInstance().boardController.addMessage(messageModel);
 
         Main.getInstance().showBoardPage();
     }

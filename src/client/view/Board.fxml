@@ -5,18 +5,11 @@
 
 <GridPane fx:controller="client.controller.BoardView"
           xmlns:fx="http://javafx.com/fxml">
-    <SplitPane>
-        <TableView fx:id="boardTable" prefWidth="650">
-            <columns>
-                <TableColumn text="Text" fx:id="textColumn" />
-                <TableColumn text="Author" fx:id="authorColumn" />
-            </columns>
-        </TableView>
-        <GridPane GridPane.columnIndex="0" GridPane.rowIndex="2" vgap="10">
-            <Button text="Создать сообщение"
-                    GridPane.rowIndex="0"
-                    onAction="#handleCreateMessage"/>
-        </GridPane>
-    </SplitPane>
-
+    <TableView fx:id="boardTable" prefWidth="650" prefHeight="600" GridPane.columnIndex="0" GridPane.rowIndex="1">
+        <columns>
+            <TableColumn text="Text" fx:id="textColumn" prefWidth="310" />
+            <TableColumn text="Author" fx:id="authorColumn" prefWidth="140" />
+            <TableColumn text="Date" fx:id="dateColumn" prefWidth="140" />
+        </columns>
+    </TableView>
 </GridPane>

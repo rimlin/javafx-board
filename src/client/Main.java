@@ -2,10 +2,13 @@ package client;
 
 import client.controller.Users;
 import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -14,7 +17,6 @@ import client.model.Message;
 import client.controller.MessageForm;
 import client.controller.MessageView;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -28,6 +30,9 @@ public class Main extends Application {
     public Users usersController;
 
     private static Main instance;
+
+    public MenuBar menuBar;
+    public Menu menuFile;
 
     public Main() {
         instance = this;
@@ -56,15 +61,23 @@ public class Main extends Application {
     }
 
     private void attachMenu() {
-        MenuBar menuBar = new MenuBar();
+        menuBar = new MenuBar();
+        menuFile = new Menu();
 
-        Menu menuProfile = new Menu("Profile");
-        Menu menuBoard = new Menu("Board");
-        Menu menuExit = new Menu("Exit");
+        MenuItem menuBoard = new MenuItem("Доска сообщений");
+        MenuItem menuAddMessage = new MenuItem("Добавить сообщение");
+        MenuItem menuExit = new MenuItem("Выход");
 
-        menuBar.getMenus().addAll(menuProfile, menuBoard, menuExit);
+        menuBoard.setOnAction(t -> showBoardPage());
+        menuAddMessage.setOnAction(t -> showMessageForm("create"));
+        menuExit.setOnAction(t -> usersController.doExit());
 
+        menuFile.getItems().addAll(menuBoard, menuAddMessage, menuExit);
+
+        menuBar.getMenus().addAll(menuFile);
         rootLayout.setTop(menuBar);
+
+        menuBar.setVisible(false);
     }
 
     public void initRootLayout() {

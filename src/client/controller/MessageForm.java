@@ -60,6 +60,7 @@ public class MessageForm {
 
     private void createMessage() {
         messageModel = new Message(-1, text.getText(), Main.getInstance().usersController.getCurrentUser().getId(), "-1");
+        messageModel.setupAuthor();
 
         Main.getInstance().boardController.addMessage(messageModel);
 

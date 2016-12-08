@@ -5,6 +5,7 @@ import client.model.Message;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 
 /**
  * Created by ilmir on 2016-11-14.
@@ -21,6 +22,9 @@ public class MessageView {
     @FXML
     private Label author;
 
+    @FXML
+    private GridPane editBtn;
+
     public MessageView(Message message) {
         messageModel = message;
     }
@@ -30,6 +34,10 @@ public class MessageView {
         text.setText(messageModel.getText());
         date.setText(messageModel.getDateFormat());
         author.setText(messageModel.getAuthor());
+
+        if (messageModel.getAuthorId() != Main.getInstance().usersController.getCurrentUser().getId()) {
+            editBtn.setVisible(false);
+        }
     }
 
     @FXML

@@ -16,6 +16,7 @@ public class Message implements Serializable {
     private final String date;
     private final Integer authorId;
     private transient String author;
+    private transient String formatDate;
 
     public Message(Integer id, String text, Integer authorId, String date) {
         this.text = text;
@@ -45,6 +46,8 @@ public class Message implements Serializable {
         } else {
             author = "None";
         }
+
+        this.formatDate = getDateFormat();
     }
 
     public String getText() {
@@ -61,6 +64,10 @@ public class Message implements Serializable {
 
     public String getDateString() {
         return date;
+    }
+
+    public String getFormatDate() {
+        return formatDate;
     }
 
     public Integer getAuthorId() {

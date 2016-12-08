@@ -2,6 +2,7 @@ package client.controller;
 
 import client.Main;
 import client.model.User;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class Users {
     private ArrayList<User> userList = new ArrayList<User>();
 
+    private Boolean isAuth = false;
     private User currentUser;
 
     public Users() {
@@ -24,7 +26,10 @@ public class Users {
     }
 
     public void setCurrentUser(User userModel) {
+        isAuth = true;
         currentUser = userModel;
+        Main.getInstance().menuBar.setVisible(true);
+        Main.getInstance().menuFile.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
     }
 
     public void uploadUsers(User[] list) {
@@ -56,5 +61,12 @@ public class Users {
         this.setCurrentUser(newUser);
 
         Main.getInstance().clientService.createUser(newUser);
+    }
+
+    public void doExit() {
+        isAuth = false;
+
+        Main.getInstance().showAuthPage();
+        Main.getInstance().menuBar.setVisible(false);
     }
 }

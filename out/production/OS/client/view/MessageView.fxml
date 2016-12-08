@@ -38,7 +38,7 @@
         <Label fx:id="text"/>
     </GridPane>
 
-    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="6">
+    <GridPane fx:id="editBtn" GridPane.columnIndex="0" GridPane.rowIndex="6">
         <Button text="Редактировать"
                 onAction="#handleEdit"/>
     </GridPane>

@@ -78,11 +78,9 @@ class Connection extends Thread {
                 if (model instanceof Transporter) {
                     Transporter transporter = (Transporter) model;
 
-                    System.out.printf(transporter.getOperation());
-
-                    //if (transporter.getOperation() == "fetch") {
+                    if (transporter.getOperation().equals("fetch")) {
                         this.fetchData(transporter);
-                    //}
+                    }
                 }
             } catch (EOFException e) {
                 System.out.println("EOF:" + e.getMessage());

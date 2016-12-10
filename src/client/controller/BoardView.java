@@ -48,6 +48,11 @@ public class BoardView {
         }
     }
 
+    public void refreshTable() {
+        boardTable.getColumns().get(0).setVisible(false);
+        boardTable.getColumns().get(0).setVisible(true);
+    }
+
     @FXML
     protected void handleCreateMessage(ActionEvent event) {
         Main.getInstance().showMessageForm("create");

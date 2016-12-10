@@ -1,6 +1,6 @@
 package client;
 
-import client.controller.Users;
+import client.controller.*;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
@@ -12,10 +12,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import client.controller.Board;
 import client.model.Message;
-import client.controller.MessageForm;
-import client.controller.MessageView;
 
 import java.io.IOException;
 
@@ -23,6 +20,7 @@ public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
 
+    public BoardView boardViewController;
     public Board boardController;
 
     public TCPClient clientService;
@@ -51,6 +49,7 @@ public class Main extends Application {
 
         usersController = new Users();
 
+        boardViewController = new BoardView();
         boardController = new Board();
 
         clientService.getUsersFromServer();
@@ -135,6 +134,7 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("view/Board.fxml"));
+            loader.setController(boardViewController);
 
             GridPane boardPage = (GridPane) loader.load();
 

@@ -3,8 +3,7 @@
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 
-<GridPane fx:controller="client.controller.BoardView"
-          xmlns:fx="http://javafx.com/fxml">
+<GridPane xmlns:fx="http://javafx.com/fxml">
     <TableView fx:id="boardTable" prefWidth="650" prefHeight="600" GridPane.columnIndex="0" GridPane.rowIndex="1">
         <columns>
             <TableColumn text="Text" fx:id="textColumn" prefWidth="310" />

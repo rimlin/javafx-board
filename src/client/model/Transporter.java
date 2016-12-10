@@ -15,10 +15,10 @@ public class Transporter implements Serializable {
     }
 
     public String getOperation() {
-        return this.operation;
+        return operation;
     }
 
     public String getModule() {
-        return this.module;
+        return module;
     }
 }

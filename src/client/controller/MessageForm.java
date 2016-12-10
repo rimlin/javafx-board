@@ -52,6 +52,7 @@ public class MessageForm {
     @FXML
     protected void handleSubmitForm(ActionEvent event) {
         if (formType == "edit") {
+            Main.getInstance().boardController.updateMessage(messageModel.getId(), text.getText());
             Main.getInstance().showBoardPage();
         } else {
             this.createMessage();

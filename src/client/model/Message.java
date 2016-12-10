@@ -11,7 +11,7 @@ import client.Main;
  * Created by ilmir on 2016-11-03.
  */
 public class Message implements Serializable {
-    private final String text;
+    private String text;
     private final Integer id;
     private final String date;
     private final Integer authorId;
@@ -48,6 +48,10 @@ public class Message implements Serializable {
         }
 
         this.formatDate = getDateFormat();
+    }
+
+    public void setText(String newText) {
+        text = newText;
     }
 
     public String getText() {

@@ -54,6 +54,7 @@ public class Main extends Application {
 
         clientService.getUsersFromServer();
         clientService.getMessagesFromServer();
+        clientService.getOptionsFromServer();
 
         initRootLayout();
         showAuthPage();
@@ -79,6 +80,15 @@ public class Main extends Application {
         menuBar.setVisible(false);
     }
 
+    public void ifAdminAddMenuItem() {
+        MenuItem menuOptions = new MenuItem("Настройка");
+        menuOptions.setOnAction(t -> showOptionsPage());
+
+        if (usersController.getCurrentUser().getId() == 1) {
+            menuFile.getItems().add(menuOptions);
+        }
+    }
+
     public void initRootLayout() {
         try {
             // Загружаем корневой макет
@@ -98,6 +108,19 @@ public class Main extends Application {
             primaryStage.show();
 
             attachMenu();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showOptionsPage() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("view/Options.fxml"));
+
+            GridPane optionsPage = (GridPane) loader.load();
+
+            rootLayout.setCenter(optionsPage);
         } catch (IOException e) {
             e.printStackTrace();
         }

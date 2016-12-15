@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import client.model.Options;
 import client.model.Transporter;
 import client.model.User;
 import org.json.simple.JSONArray;
@@ -75,6 +76,10 @@ class Connection extends Thread {
                     this.saveData(model, "users");
                 }
 
+                if (model instanceof Options) {
+                    this.saveData(model, "board");
+                }
+
                 if (model instanceof Transporter) {
                     Transporter transporter = (Transporter) model;
 
@@ -135,6 +140,22 @@ class Connection extends Thread {
                 } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
 
                 break;
+
+            case "board":
+                Iterator io = list.iterator();
+                Options options = new Options(0);
+
+                while (io.hasNext()) {
+                    JSONObject option = (JSONObject) io.next();
+                    options = new Options(((Long) option.get("maxAmount")).intValue());
+                }
+
+                try {
+                    outputStream.writeObject(options);
+                } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
+                } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
+
+                break;
         }
     }
 
@@ -167,6 +188,8 @@ class Connection extends Thread {
             item.put("text", message.getText());
             item.put("authorId", message.getAuthorId());
             item.put("date", message.getDateString());
+
+            list.add(item);
         }
 
         if (type.equals("users")) {
@@ -177,9 +200,19 @@ class Connection extends Thread {
             item.put("password", user.getPassword());
             item.put("name", user.getFirstName());
             item.put("surname", user.getLastName());
+
+            list.add(item);
         }
 
-        list.add(item);
+        if (type.equals("board")) {
+            Options user = (Options) model;
+
+            item.put("maxAmount", user.getMaxAmount());
+
+            list.remove(0);
+            list.add(item);
+        }
+
         table.put("list", list);
 
         try (FileWriter file = new FileWriter(getFilePath(type))) {
@@ -192,6 +225,13 @@ class Connection extends Thread {
     private void resetTable(String type) {
         JSONObject obj = new JSONObject();
         JSONArray emptyArray = new JSONArray();
+
+        if (type.equals("board")) {
+            JSONObject item = new JSONObject();
+            item.put("maxAmount", 0);
+            emptyArray.add(item);
+        }
+
         obj.put("list", emptyArray);
 
         try (FileWriter file = new FileWriter(getFilePath(type))) {
@@ -206,8 +246,7 @@ class Connection extends Thread {
         String filePath = "";
         System.out.println("TYPE: " + type);
 
-        //if (type == "messages")
-        filePath = messagesFile;
+        if (type.equals("messages")) filePath = messagesFile;
         if (type.equals("board")) filePath = boardFile;
         if (type.equals("users")) filePath = usersFile;
 

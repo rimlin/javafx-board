@@ -28,6 +28,7 @@ public class Users {
     public void setCurrentUser(User userModel) {
         isAuth = true;
         currentUser = userModel;
+        Main.getInstance().ifAdminAddMenuItem();
         Main.getInstance().menuBar.setVisible(true);
         Main.getInstance().menuFile.setText(currentUser.getFirstName() + " " + currentUser.getLastName());
     }

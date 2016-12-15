@@ -1,7 +1,9 @@
 
 package client;
 
+import client.controller.OptionsView;
 import client.model.Message;
+import client.model.Options;
 import client.model.Transporter;
 import client.model.User;
 
@@ -58,6 +60,22 @@ public class TCPClient {
         } catch (ClassNotFoundException e) { e.printStackTrace(); }
     }
 
+    public void getOptionsFromServer() {
+        Transporter transporter = new Transporter("fetch", "board");
+
+        try {
+            outputStream.writeObject(transporter);
+
+            Object objects = inputStream.readObject();
+
+            Options options = (Options)objects;
+
+            Main.getInstance().boardController.setOptions(options);
+        } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
+        } catch (IOException e) {System.out.println ("readline:"+e.getMessage());
+        } catch (ClassNotFoundException e) { e.printStackTrace(); }
+    }
+
     public void sendMessage(Message messageModel) {
         try {
             outputStream.writeObject(messageModel);
@@ -68,6 +86,13 @@ public class TCPClient {
     public void createUser(User userModel) {
         try {
             outputStream.writeObject(userModel);
+        } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
+        } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
+    }
+
+    public void sendOptions(Options options) {
+        try {
+            outputStream.writeObject(options);
         } catch (EOFException e){System.out.println ("EOF:"+e.getMessage());
         } catch (IOException e) {System.out.println ("readline:"+e.getMessage());}
     }

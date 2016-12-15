@@ -2,6 +2,7 @@ package client.controller;
 
 import client.Main;
 import client.model.Message;
+import client.model.Options;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -12,6 +13,7 @@ import java.util.Optional;
  */
 public class Board {
     private ObservableList<Message> messageData = FXCollections.observableArrayList();
+    private Options options;
 
     public Board() {
     }
@@ -47,5 +49,19 @@ public class Board {
             findMessage.get().setText(text);
             Main.getInstance().boardViewController.refreshTable();
         }
+    }
+
+    public void setOptions(Options options) {
+        this.options = options;
+    }
+
+    public Options getOptions() {
+        return options;
+    }
+
+    public void updateOptions(Options options) {
+        setOptions(options);
+
+        Main.getInstance().clientService.sendOptions(options);
     }
 }

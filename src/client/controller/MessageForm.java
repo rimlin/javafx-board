@@ -6,6 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 /**
@@ -16,6 +18,9 @@ public class MessageForm {
     String formType;
 
     @FXML
+    private VBox form;
+
+    @FXML
     private Button formButton;
 
     @FXML
@@ -23,6 +28,9 @@ public class MessageForm {
 
     @FXML
     private TextArea text;
+
+    @FXML
+    private Text error;
 
     public MessageForm(String type) {
         formType = type;
@@ -39,8 +47,13 @@ public class MessageForm {
             formButton.setText("Сохранить");
             text.setText(messageModel.getText());
         } else {
-            title.setText("Создание сообщения");
-            formButton.setText("Создать");
+            if (Main.getInstance().boardController.getAmount() >= Main.getInstance().boardController.getOptions().getMaxAmount()) {
+                form.setVisible(false);
+                error.setText("Превышен лимит на максимальное количество сообщений.");
+            } else {
+                title.setText("Создание сообщения");
+                formButton.setText("Создать");
+            }
         }
     }
 

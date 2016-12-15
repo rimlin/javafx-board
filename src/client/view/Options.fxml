@@ -1,0 +1,26 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<GridPane fx:controller="client.controller.OptionsView"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <Text text="Настройки системы"
+          GridPane.columnIndex="1" GridPane.rowIndex="0"
+          GridPane.columnSpan="2"/>
+
+    <Label text="Максимальное количество сообщений:"
+           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+
+    <TextField fx:id="numMessage"
+               GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <HBox spacing="10" alignment="bottom_right"
+          GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <Button text="Сохранить"
+                onAction="#handleSubmitButtonAction"/>
+    </HBox>
+</GridPane>
